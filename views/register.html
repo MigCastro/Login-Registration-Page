@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Register</h1>
+    <form action="/register" method="POST">
+      <input type="email" id="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit">Register</button>
+    </form>
+    <p>Already have an account? <a href="/login">Login</a></p>
+
+    <!-- Error message popup -->
+    <div class="error" id="errorPopup">
+      <p id="errorMessage"></p>
+    </div>
+
+    <!-- JavaScript to display the error message popup -->
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const errorMessage = params.get('error');
+
+      if (errorMessage) {
+        const errorPopup = document.getElementById('errorPopup');
+        const errorMessageElement = document.getElementById('errorMessage');
+        errorMessageElement.textContent = errorMessage;
+        errorPopup.classList.add('show');
+      }
+
+      //Verify
+      const verificationCode = '<%= verificationCode %>';
+    if (verificationCode) {
+      // Show the verification form
+      document.getElementById('verificationForm').style.display = 'block';
+
+      // Handle verification form submission
+      const verificationForm = document.querySelector('#verificationForm form');
+      verificationForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const verificationCodeInput = document.getElementById('verificationCode');
+        const verificationError = document.getElementById('verificationError');
+        verificationError.textContent = '';
+
+        try {
+          const response = await fetch('/verify', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: document.getElementById('email').value,
+              verificationCode: verificationCodeInput.value,
+            }),
+          });
+          const data = await response.json();
+
+          if (response.ok) {
+            // Verification successful
+            alert(data.message);
+            window.location.href = '/login';
+          } else {
+            // Verification failed
+            verificationError.textContent = data.message;
+          }
+        } catch (error) {
+          console.error('Error occurred during verification:', error);
+          verificationError.textContent = 'Failed to verify. Please try again later.';
+        }
+      });
+    }
+    </script>
+  </div>
+  <div id="verificationForm" style="display: none;">
+    <h2>Account Verification</h2>
+    <p id="verificationError" style="color: red;"></p>
+    <form action="/verify" method="post">
+      <label for="verificationCode">Verification Code:</label>
+      <input type="text" id="verificationCode" name="verificationCode" required>
+      <button type="submit">Verify</button>
+    </form>
+  </div>
+</body>
+</html>

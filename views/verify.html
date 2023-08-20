@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Verification</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Account Verification</h1>
+    <form action="/verify" method="POST">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+      <label for="verificationCode">Verification Code:</label>
+      <input type="text" id="verificationCode" name="verificationCode" required>
+      <button type="submit">Verify</button>
+    </form>
+    <p>Didn't receive the code? <a href="/resend">Resend</a></p>
+
+    <!-- Error message popup -->
+    <div class="error" id="errorPopup">
+      <p id="errorMessage"></p>
+    </div>
+
+    <!-- JavaScript to display the error message popup -->
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const errorMessage = params.get('error');
+
+      if (errorMessage) {
+        const errorPopup = document.getElementById('errorPopup');
+        const errorMessageElement = document.getElementById('errorMessage');
+        errorMessageElement.textContent = errorMessage;
+        errorPopup.classList.add('show');
+      }
+    </script>
+  </div>
+</body>
+</html>

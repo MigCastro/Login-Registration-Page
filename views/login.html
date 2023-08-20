@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Login</h1>
+    <form action="/login" method="POST">
+        <input type="email" id="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="/register">Register</a></p>
+
+    <!-- Error message popup -->
+    <div class="error" id="errorPopup">
+      <p id="errorMessage"></p>
+    </div>
+    <div class="success" id="successPopup">
+      <p id="successMessage"></p>
+    </div>
+    <!-- JavaScript to display the error message popup -->
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const errorMessage = params.get('error');
+
+      if (errorMessage) {
+        const errorPopup = document.getElementById('errorPopup');
+        const errorMessageElement = document.getElementById('errorMessage');
+        errorMessageElement.textContent = errorMessage;
+        errorPopup.classList.add('show');
+      }
+
+      const successMessage = params.get('success');
+      if (successMessage) {
+        const successPopup = document.getElementById('successPopup');
+        const successMessageElement = document.getElementById('successMessage');
+        successMessageElement.textContent = successMessage;
+        successPopup.classList.add('show');
+      }
+    </script>
+  </div>
+</body>
+</html>
