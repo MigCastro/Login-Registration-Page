@@ -7,7 +7,6 @@ const bcrypt = require('bcrypt');
 const path = require('path');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
-
 const app = express();
 
 app.use(express.static('views'));
