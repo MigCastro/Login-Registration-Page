@@ -12,14 +12,14 @@ const app = express();
 
 app.use(express.static('views'));
 // Connect to your MongoDB database
-mongoose.connect('mongodb+srv://Cluster60627:Michelle33@cluster60627.wuhbtvh.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://Cluster60627:Michelle33@cluster60627.wuhbtvh.mongodb.net/Cluster60627', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
 // Create a new MongoDB session store
 const store = new MongoDBStore({
-  uri: 'mongodb+srv://Cluster60627:Michelle33@cluster60627.wuhbtvh.mongodb.net/?retryWrites=true&w=majority',
+  uri: 'mongodb+srv://Cluster60627:Michelle33@cluster60627.wuhbtvh.mongodb.net/Cluster60627',
   collection: 'sessions',
 });
 
