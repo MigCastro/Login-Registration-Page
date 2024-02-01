@@ -10,6 +10,7 @@ const crypto = require('crypto');
 
 const app = express();
 
+app.use(express.static('views'));
 // Connect to your MongoDB database
 mongoose.connect('mongodb+srv://Cluster60627:Michelle33@cluster60627.wuhbtvh.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true,
@@ -38,7 +39,7 @@ app.use(
 );
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('views'));
+
 
 // Define the User model
 const User = require('./models/user');
